@@ -8,8 +8,7 @@ public class CalculatorRome extends Operation {
     private int result_int;
     private String sign = "";
     private String result_string;
-    private  String[] roman_letters_10 = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-
+    private String[] roman_letters_10 = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
 
 
     CalculatorRome(String value1, String value2) {
@@ -19,14 +18,7 @@ public class CalculatorRome extends Operation {
         this.romes_value2_int = convert_to_int(romes_value2);
     }
 
-    private String convert_result_to_Romes(int n, int ostatok) { //тут сделать конвертацию с 50 и 100
-//        if (result_int < 1){
-//            try {
-//                throw new Exception("Result can not be < I");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
+    private String convert_result_to_Romes(int n, int ostatok) {
         ostatok = n % 10;
         if (ostatok != 0) {
             try {
@@ -35,23 +27,29 @@ public class CalculatorRome extends Operation {
                 e.printStackTrace();
                 System.out.println("Result can not be < I");
                 sign = "-";
-                return convert_result_to_Romes(n - ostatok, 0) + roman_letters_10[(ostatok + 1) * -1];
-
             }
 
         }
-//        Возможность вывести отрицательное римское число
-        if (n > 0) {
-            n = n - 10;
-            return convert_result_to_Romes(n,0) + "X";
-        } else if (n < 0) {
-            n = n + 10;
-            return convert_result_to_Romes(n,0) + "X";
-        }   else {
-            return sign;
+//        convert to rome
+        while (n != 0) {
+            if (n > 0 && n < 50) {
+                n = n - 10;
+                return convert_result_to_Romes(n, 0) + "X";
+            } else if (n >= 40 && n < 90) {
+                n = n - 40;
+                return convert_result_to_Romes(n, 0) + "L";
+            } else if (n == 90) {
+                n = n - 90;
+                return convert_result_to_Romes(n, 0) + "XC";
+            } else if (n == 100) {
+                n = n - 100;
+                return convert_result_to_Romes(n, 0) + "C";
+            } else {
+                return sign;
+            }
         }
 
-
+        return sign;
     }
 
 
@@ -69,14 +67,8 @@ public class CalculatorRome extends Operation {
 
     @Override
     public void div() {
-        try {
-            result_int = romes_value1_int / romes_value2_int;
-            result_string = convert_result_to_Romes(result_int, result_int);
-        } catch (ArithmeticException e) {
-            System.out.print("Проверьте правильность ввода римских цифр. Вероятно введены и арабские и римские одновременно. ");
-            return;
-        }
-
+        result_int = romes_value1_int / romes_value2_int;
+        result_string = convert_result_to_Romes(result_int, result_int);
     }
 
     @Override
@@ -107,13 +99,6 @@ public class CalculatorRome extends Operation {
                     break;
                 case 'X':
                     values_int[i] = 10;
-                    break;
-
-                default:
-                    System.out.println("Содержится неверный символ. Проверьте правильность ввода римских цифр:" + "\n" +
-                            "I = 1" + "\n" +
-                            "V = 5" + "\n" +
-                            "X = 10");
                     break;
             }
         }

@@ -1,4 +1,5 @@
 package CalculatorTest;
+
 public abstract class Operation {
 
     public abstract void sum();
