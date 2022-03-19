@@ -1,28 +1,28 @@
 package CalculatorTest;
 
 public class CalculatorRome extends Operation {
-    private String romes_value1;
-    private String romes_value2;
-    private int romes_value1_int;
-    private int romes_value2_int;
-    private int result_int;
+    private String romesValue1;
+    private String romesValue2;
+    private int romesValue1Int;
+    private int romesValue2Int;
+    private int resultInt;
     private String sign = "";
-    private String result_string;
-    private String[] roman_letters_10 = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
+    private String resultString;
+    private String[] romanLetters10 = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
 
 
     CalculatorRome(String value1, String value2) {
-        this.romes_value1 = value1;
-        this.romes_value2 = value2;
-        this.romes_value1_int = convert_to_int(romes_value1);
-        this.romes_value2_int = convert_to_int(romes_value2);
+        this.romesValue1 = value1;
+        this.romesValue2 = value2;
+        this.romesValue1Int = convertToInt(romesValue1);
+        this.romesValue2Int = convertToInt(romesValue2);
     }
 
-    private String convert_result_to_Romes(int n, int ostatok) {
+    private String convertResultToRomes(int n, int ostatok) {
         ostatok = n % 10;
         if (ostatok != 0) {
             try {
-                return convert_result_to_Romes(n - ostatok, 0) + roman_letters_10[ostatok - 1];
+                return convertResultToRomes(n - ostatok, 0) + romanLetters10[ostatok - 1];
             } catch (ArrayIndexOutOfBoundsException e) {
                 e.printStackTrace();
                 System.out.println("Result can not be < I");
@@ -34,16 +34,16 @@ public class CalculatorRome extends Operation {
         while (n != 0) {
             if (n > 0 && n < 50) {
                 n = n - 10;
-                return convert_result_to_Romes(n, 0) + "X";
+                return convertResultToRomes(n, 0) + "X";
             } else if (n >= 40 && n < 90) {
                 n = n - 40;
-                return convert_result_to_Romes(n, 0) + "L";
+                return convertResultToRomes(n, 0) + "L";
             } else if (n == 90) {
                 n = n - 90;
-                return convert_result_to_Romes(n, 0) + "XC";
+                return convertResultToRomes(n, 0) + "XC";
             } else if (n == 100) {
                 n = n - 100;
-                return convert_result_to_Romes(n, 0) + "C";
+                return convertResultToRomes(n, 0) + "C";
             } else {
                 return sign;
             }
@@ -55,93 +55,93 @@ public class CalculatorRome extends Operation {
 
     @Override
     public void sum() {
-        result_int = romes_value1_int + romes_value2_int;
-        result_string = convert_result_to_Romes(result_int, result_int);
+        resultInt = romesValue1Int + romesValue2Int;
+        resultString = convertResultToRomes(resultInt, resultInt);
     }
 
     @Override
     public void diff() {
-        result_int = romes_value1_int - romes_value2_int;
-        result_string = convert_result_to_Romes(result_int, result_int);
+        resultInt = romesValue1Int - romesValue2Int;
+        resultString = convertResultToRomes(resultInt, resultInt);
     }
 
     @Override
     public void div() {
-        result_int = romes_value1_int / romes_value2_int;
-        result_string = convert_result_to_Romes(result_int, result_int);
+        resultInt = romesValue1Int / romesValue2Int;
+        resultString = convertResultToRomes(resultInt, resultInt);
     }
 
     @Override
     public void mul() {
-        result_int = romes_value1_int * romes_value2_int;
-        result_string = convert_result_to_Romes(result_int, result_int);
+        resultInt = romesValue1Int * romesValue2Int;
+        resultString = convertResultToRomes(resultInt, resultInt);
     }
 
     @Override
     public int getResult() {
-        return result_int;
+        return resultInt;
     }
 
     public String getStringResult() {
-        return result_string;
+        return resultString;
     }
 
-    private int convert_to_int(String romes_value) {
-        char[] value_char = romes_value.toCharArray();
-        int[] values_int = new int[value_char.length];
-        for (int i = 0; i < value_char.length; i++) {
-            switch (value_char[i]) {
+    private int convertToInt(String romesValue) {
+        char[] valueChar = romesValue.toCharArray();
+        int[] valuesInt = new int[valueChar.length];
+        for (int i = 0; i < valueChar.length; i++) {
+            switch (valueChar[i]) {
                 case 'I':
-                    values_int[i] = 1;
+                    valuesInt[i] = 1;
                     break;
                 case 'V':
-                    values_int[i] = 5;
+                    valuesInt[i] = 5;
                     break;
                 case 'X':
-                    values_int[i] = 10;
+                    valuesInt[i] = 10;
                     break;
             }
         }
-        int result = values_int[0];
-        for (int i = 0; i < values_int.length && values_int.length > i + 1; i++) {
-            if (values_int[i] >= values_int[i + 1]) {
-                result += values_int[i + 1];
-            } else if (values_int[i] < values_int[i + 1]) {
-                result = result + values_int[i + 1] - 2;
+        int result = valuesInt[0];
+        for (int i = 0; i < valuesInt.length && valuesInt.length > i + 1; i++) {
+            if (valuesInt[i] >= valuesInt[i + 1]) {
+                result += valuesInt[i + 1];
+            } else if (valuesInt[i] < valuesInt[i + 1]) {
+                result = result + valuesInt[i + 1] - 2;
             }
         }
         return result;
     }
 
-    public String getCalculatorRome_value1() {
-        return romes_value1;
+    public String getCalculatorRomeValue1() {
+        return romesValue1;
     }
 
-    public String getCalculatorRome_value2() {
-        return romes_value2;
+    public String getCalculatorRomeValue2() {
+        return romesValue2;
     }
 
-    public void setCalculatorRome_value1(String romes_value1) {
-        this.romes_value1 = romes_value1;
+    public void setCalculatorRomeValue1(String romesValue1) {
+        this.romesValue1 = romesValue1;
     }
 
-    public void setCalculatorRome_value2(String romes_value2) {
-        this.romes_value2 = romes_value2;
+    public void setCalculatorRomeValue2(String romesValue2) {
+        this.romesValue2 = romesValue2;
     }
 
-    public int getCalculatorRome_value1_int() {
-        return romes_value1_int;
+    public int getCalculatorRomeValue1Int() {
+        return romesValue1Int;
     }
 
-    public int getCalculatorRome_value2_int() {
-        return romes_value2_int;
+    public int getCalculatorRomeValue2Int() {
+        return romesValue2Int;
     }
 
-    public void setCalculatorRome_value1_int(int romes_value1_int) {
-        this.romes_value1_int = romes_value1_int;
+    public void setCalculatorRomeValue1Int(int romesValue1Int) {
+        this.romesValue1Int = romesValue1Int;
     }
 
-    public void setCalculatorRome_value2_int(int romes_value2_int) {
-        this.romes_value2_int = romes_value2_int;
+    public void setCalculatorRomeValue2Int(int romesValue2Int) {
+        this.romesValue2Int = romesValue2Int;
     }
 }
